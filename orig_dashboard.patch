@@ -1,0 +1,13 @@
+commit 10a457e3d9bec731c262fd5691a79b70564fbd32
+Author: Dennis T.Y. Leo <mayderger@gmail.com>
+Date:   Sun Mar 8 14:46:02 2026 +0800
+
+    Complete XRAG dashboard with README, server, and latest fixes
+
+diff --git a/templates/dashboard.html b/templates/dashboard.html
+index 8a79f67..8b13789 100644
+--- a/templates/dashboard.html
++++ b/templates/dashboard.html
+@@ -1 +1 @@
+-[I will paste the complete dashboard HTML here - about 1500 lines]
++

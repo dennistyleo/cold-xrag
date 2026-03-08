@@ -641,41 +641,43 @@
     </div>
 
     <script>
-        // ==================== COMPLETE DOMAINS (8) ====================
-        const domains = [
-            { id: 'physics', name: 'Physics', count: 65, icon: '⚛️' },
-            { id: 'electrical', name: 'Electrical', count: 52, icon: '⚡' },
-            { id: 'mechanical', name: 'Mechanical', count: 48, icon: '🔧' },
-            { id: 'mathematics', name: 'Mathematics', count: 45, icon: '📐' },
-            { id: 'chemistry', name: 'Chemistry', count: 42, icon: '🧪' },
-            { id: 'transportation', name: 'Transportation', count: 45, icon: '🚛' },
-            { id: 'financial', name: 'Financial', count: 40, icon: '💰' },
-            { id: 'computerscience', name: 'Computer Science', count: 35, icon: '💻' }
-        ];
+        // ==================== REAL DOMAINS FETCH ====================
+        let domains = [];
+        async function fetchDomains() {
+            try {
+                const response = await fetch('/api/domains');
+                domains = await response.json();
+                loadDomains();
+            } catch (error) {
+                console.error("Failed to fetch domains:", error);
+            }
+        }
 
-        // ==================== CATEGORIES ====================
-        const categories = {
-            'physics': ['Classical Mechanics', 'Thermodynamics', 'Electromagnetism', 'Quantum Mechanics', 'Optics'],
-            'electrical': ['Circuit Theory', 'Electronics', 'Power Systems', 'Control Systems', 'Signal Processing'],
-            'mechanical': ['Solid Mechanics', 'Fluid Mechanics', 'Thermodynamics', 'Heat Transfer', 'Vibration'],
-            'mathematics': ['Algebra', 'Geometry', 'Calculus', 'Statistics', 'Topology'],
-            'chemistry': ['Physical Chemistry', 'Organic Chemistry', 'Inorganic Chemistry', 'Analytical Chemistry'],
-            'transportation': ['Trucking', 'Railroad', 'Automotive', 'Aerospace', 'Marine'],
-            'financial': ['Derivatives', 'Asset Pricing', 'Risk Management', 'Portfolio Theory'],
-            'computerscience': ['Algorithms', 'Machine Learning', 'Cryptography', 'Information Theory']
-        };
 
-        // ==================== FORMULAS ====================
-        const formulas = {
-            'physics': ['F = ma', 'E = mc²', 'PV = nRT', 'F = G·m₁m₂/r²', '∇·E = ρ/ε₀'],
-            'electrical': ['V = IR', 'P = VI', 'Z = R + jX', 'f = 1/(2π√(LC))', '∇×E = -∂B/∂t'],
-            'mechanical': ['σ = Eε', 'τ = μ du/dy', 'Q = -k∇T', 'F = kx', 'τ = Iα'],
-            'mathematics': ['x = [-b ± √(b²-4ac)]/2a', 'a² + b² = c²', '∫f(x)dx', 'dy/dx = lim Δy/Δx'],
-            'chemistry': ['PV = nRT', 'ΔG = ΔH - TΔS', 'k = Ae^{-Ea/(RT)}', 'pH = -log[H⁺]'],
-            'transportation': ['F = ½ρv²C_dA', 'd = v²/(2μg)', 'P = F·v', 'η = P_out/P_in'],
-            'financial': ['C = S·N(d₁) - K·e^{-rT}·N(d₂)', 'E(Rᵢ) = R_f + βᵢ(E(R_m)-R_f)'],
-            'computerscience': ['O(n log n)', 'P(A|B) = P(B|A)P(A)/P(B)', 'H(X) = -Σp(x)log p(x)']
-        };
+        // ==================== CATEGORIES FETCH ====================
+        let categories = {};
+        async function fetchCategories(domain) {
+            try {
+                const response = await fetch(`/api/categories?domain=${domain}`);
+                return await response.json();
+            } catch (error) {
+                console.error("Failed to fetch categories:", error);
+                return [];
+            }
+        }
+
+        // ==================== FORMULAS FETCH ====================
+        async function fetchFormulas(domain, category = null) {
+            try {
+                let url = `/api/formulas?domain=${domain}`;
+                if (category) url += `&category=${encodeURIComponent(category)}`;
+                const response = await fetch(url);
+                return await response.json();
+            } catch (error) {
+                console.error("Failed to fetch formulas:", error);
+                return [];
+            }
+        }
 
         // ==================== CHART DRAWING FUNCTIONS ====================
 
@@ -1208,12 +1210,14 @@
         }
 
         function exportFreezePackage() {
-            alert('Freeze package exported');
+            // Read from current job ID when implemented, mock for now
+            const jobId = "job_123";
+            window.location.href = `/api/export/${jobId}`;
         }
 
         // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            loadDomains();
+        document.addEventListener('DOMContentLoaded', async function() {
+            await fetchDomains();
             drawCoreChart();
             drawRSIChart();
             drawEMAChart();
