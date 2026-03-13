@@ -1,16 +1,17 @@
-# COLD_XRAG | The Ontology Cornerstone for Industrial AI
+# COLD_XRAG | Operational SOP (Baseline V42)
 
-## The Multi-Industry Bedrock
-COLD_XRAG is an **Offline-Native AI Agent** that serves as a cross-industry ontology cornerstone. Unlike standard probabilistic LLMs, XRAG utilizes a deterministic **GNN-Causal-World Model** architecture to enforce physical sovereignty across diverse sectors:
-- **Vertical IoT**: Mission-critical power management and cooling.
-- **Manufacturing**: Automated detection of anomalous device states.
-- **Defense/Industrial**: Secure, air-gapped reasoning without hallucination risks.
+## Phase 0: Repository Acquisition
+- git clone https://github.com/dennistyleo/cold-xrag.git
 
-## Methodology: Deductive vs. Abductive
-- **Deductive Admissibility**: For Devices Under Test (DUT), the agent provides strict binary validation (Pass/Fail) based on hard physical constants.
-- **Abductive Inference**: For complex system failures, the agent leverages a rich library of **378 Axioms across 17 Domains** to "best-fit" a causal explanation, drastically reducing diagnostic downtime.
+## Phase 1: Environment & Server
+- conda activate xr-ml-env
+- python3 app.py (Target: http://127.0.0.1:5003)
 
-## Key Features
-- **Anti-Hallucination Core**: Reasoning built on World Models and Causal Matrices.
-- **Zero-Latency Ingestion**: IMS-driven telemetry processing at the Edge.
-- **Visual Sovereignty**: Multi-layer canvas for real-time physics auditing.
+## Phase 2: Ingest Driver Integration (Contract v1.0.0)
+- Input: STDIN (cat candidate.axiom | ./xrag-driver) [cite: 26]
+- Budget: MAX 2MB, Nesting Depth 32 
+- Grammar: No 'exec', 'eval', 'import' 
+- Domain Invariant: Epsilon (ε) must be in [0, 1] [cite: 91]
+
+## Phase 3: Exit Codes [cite: 137]
+- 0: ACCEPT | 2: REJECT | 3: REFUSE | 64: BAD INPUT
