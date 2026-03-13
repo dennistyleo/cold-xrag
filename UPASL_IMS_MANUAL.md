@@ -1,35 +1,37 @@
-# COLD_XRAG | Operational SOP (V36 Frozen Contract)
+# COLD_XRAG | Operational SOP (Freeze-Ingest Driver Edition)
 
-## Step 1: Physical DUT Setup
-1. Connect the **Device Under Test (DUT)** to the local network bridge.
-2. Ensure the Flask server is initialized on the host machine:
+## Phase 1: DUT Setup & Agent Initialization
+1. Ensure the DUT (Device Under Test) is connected.
+2. Launch the Flask Backend (Port 5003):
    ```bash
    python3 app.py
-Confirm UI Accessibility: http://127.0.0.1:5003.
+Phase 2: Generating the Freeze Package
+Execute the XRAG logic to generate a candidate.axiom or frozen.axiom JSON.
 
-Step 2: Parameter Input & Ingestion
-Verify ingest_protocol.py is configured with the target device UUID (4ec055ab).
+Grammar Check: Ensure payload.record.parameters keys match ^[a-zA-Z][a-zA-Z0-9_]{0,63}$.
 
-Input target efficiency thresholds (e.g., Carnot η = 0.25) in the backend config.
+Budget Check: Ensure the JSON is < 2MB and nesting depth is < 32.
 
-Start the Ingestion Pulse:
+Phase 3: Connecting to the Ingest Driver (Alex's Interface)
+The driver acts as a stateless, deterministic validator (Contract v1.0.0).
+
+Pipe the JSON: Redirect the XRAG freeze package to the driver's STDIN:
 
 Bash
-python3 ingest_protocol.py
-Output Verification: Observe the IMS: MONITOR window. Raw hex packets must flow immediately; the Agent will auto-detect the device type and map relevant axioms.
+cat candidate_package.json | ./xrag-driver
+Exit Code Audit:
 
-Step 3: The Reasoning Process
-Selection: Click the Axiom 375 node (Domain 02: Physics) in the sidebar.
+0 (ACCEPT): Package is syntactically valid and compliant.
 
-Analysis: Navigate to the CAUSAL tab to view the Granger Matrix.
+2 (REJECT): Budget or grammar violation (Check for forbidden tokens like exec or eval).
 
-Abduction: If the system score (0.854) drifts, observe the WORLD canvas. The Agent will cross-reference 17 domains to identify the specific axiom breach.
+3 (REFUSE): Missing required bounds (requires_bounds=true but bounds incomplete).
 
-Step 4: Final Output & Report
-Click GENERATE AUDIT REPORT (Bottom Right).
+Phase 4: Validating the Audit Record
+Locate the output JSON from the driver.
 
-The output must present Admissibility Metrics for the DUT.
+Verify references.audit.sha256. This hash represents the stable canonical record of the axiom.
 
-Requirement Met: Final report must be signed by the Agent UUID to meet the "Frozen Contract" specifications.
+Once ACCEPT is received, the axiom is deployed to the Frozen Surface for diagnostic reasoning.
 
-Operational Integrity Level: Sovereign | Author: Dennis Leo
+Contract Version: freeze-ingest-contract/1.0.0 | Prepared for AIChip Corp.
