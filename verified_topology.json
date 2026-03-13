@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "dut": "Node_V36_PROMPT",
+    "procedure": "V38.1-Sovereign-Gold",
+    "trust_entropy": 40
+  },
+  "nodes": [
+    {
+      "id": "AXIOM_375",
+      "status": "WARN"
+    }
+  ],
+  "impact": {
+    "loss": 416.0,
+    "causal_ok": true
+  }
+}

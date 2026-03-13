@@ -1,0 +1,100 @@
+:root { --primary: #00ff88; --border: #1a1a1a; --axiom-alpha: 0.25; }
+
+body, html { margin: 0; padding: 0; background: #000; color: #eee; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; }
+
+/* 物理佈局鎖定 */
+#master-layer { 
+    display: grid; 
+    grid-template-rows: 100px 1fr; /* 鎖定 Header 高度 */
+    height: 100vh; 
+}
+
+/* HEADER: 回歸單層大氣設計 */
+.rigid-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 0 40px; background: #050505; border-bottom: 2px solid var(--border);
+}
+.brand-unit { display: flex; align-items: center; gap: 30px; }
+.logo-100 { height: 75px; width: 75px; filter: drop-shadow(0 0 10px var(--primary)); }
+
+/* 工作區: 填滿螢幕 */
+.workspace { 
+    display: grid; 
+    grid-template-columns: 300px 1fr 320px; 
+    gap: 0; /* 移除間隙，改用內部 padding 確保精準度 */
+    height: 100%; 
+}
+
+/* 左側公理背景 */
+.axiom-bg { 
+    background: #080808; border-right: 1px solid var(--border); 
+    padding: 30px; opacity: var(--axiom-alpha); 
+}
+.tree details summary { color: var(--primary); font-size: 14px; margin-bottom: 10px; cursor: pointer; }
+
+/* 中央模型面板: 絕對頂層 */
+.model-view { 
+    display: flex; flex-direction: column; background: #000;
+    padding: 20px; z-index: 10; border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+}
+.view-box { 
+    flex: 1; border: 1px solid var(--primary); background: #050505;
+    box-shadow: inset 0 0 50px rgba(0, 255, 136, 0.05); border-radius: 4px;
+    display: flex; flex-direction: column;
+}
+
+.stage { flex: 1; position: relative; background: radial-gradient(circle, #0a0a0a, #000); }
+#math-overlay { position: absolute; top: 30px; left: 30px; color: var(--primary); font-size: 1.8rem; z-index: 20; }
+
+/* 底部 I/O 窗口 */
+.io-row { height: 180px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-top: 20px; }
+.log { background: #000; padding: 15px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #444; overflow-y: auto; }
+
+/* V37 GOLDEN PULSE */
+[title*="375"], .axiom-item:contains("375"), span:contains("375") {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    animation: goldPulse 2s infinite;
+}
+@keyframes goldPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* V37 GOLDEN INJECTION */
+[title*="Axiom 375"], .axiom-item:contains("375"), span:contains("375") {
+    color: #FFD700 !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
+    animation: goldPulse 2s infinite linear;
+}
+@keyframes goldPulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.6); }
+}
+
+/* V37 UNIVERSAL GOLDEN FIX */
+div, span, a, li {
+    if (text-content == "Axiom 375") { color: gold; } /* 這是邏輯，下方是實作 */
+}
+
+/* 強制鎖定所有包含 375 字樣的標籤顏色 */
+[class*="axiom"], [id*="axiom"] {
+    position: relative;
+}
+
+/* 針對您畫面上那個橘黃色文字進行物理覆蓋 */
+.axiom-item, span {
+    transition: all 0.5s;
+}
+
+/* 暴力覆蓋：直接鎖定特定的 style 屬性或類別 */
+span[style*="color"], .axiom-item {
+    color: #FFD700 !important;
+    text-shadow: 0 0 15px #FFD700 !important;
+    animation: goldPulseV37 2s infinite !important;
+}
+
+@keyframes goldPulseV37 {
+    0%, 100% { filter: contrast(1) brightness(1); }
+    50% { filter: contrast(1.2) brightness(1.8); }
+}

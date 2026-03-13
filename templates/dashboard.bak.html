@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cold_XRAG PRO | Sovereign Control V36</title>
+    <link rel="icon" href="data:,"> <style>
+    :root {--primary: #00ff88; --bg: #000; --panel: #050505; --border: #1a1a1a; --meta: #444; --gold: #3d331b; }
+    * { box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; background: var(--bg); color: #eee;
+    font-family: 'Inter', 'JetBrains Mono', monospace; height: 100vh; overflow: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--gold) 0%, #1a140a 100%);
+        border: 1px solid #2a2214; border-radius: 3px;
+    }
+    #layer-master {
+        display: grid;
+        grid-template-rows: 160px 1fr;
+        height: 100vh; width: 100vw;
+    }
+    .rigid-header { display: flex; flex-direction: column; background: #050505; border-bottom: 2px solid var(--border); }
+    .h-top { flex: 1; display: flex; justify-content: space-between; align-items: center; padding: 0 50px; }
+    .logo-giant { height: 110px; width: 110px; background: transparent !important; filter: drop-shadow(0 0 15px var(--primary)); object-fit: contain; }
+    .brand-title { font-size: 2.6rem; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; }
+    .h-bottom { height: 40px; background: #010101; display: flex; align-items: center; justify-content: center; gap: 40px; border-top: 1px solid #111;}
+    .p-step { width: 70px; height: 25px; border: 1px solid #222; font-size: 9px; display: flex; align-items: center; justify-content: center; color: #444; }
+    .p-step.active { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 10px var(--primary); }
+    .p-step.done { background: var(--primary); color: #000; font-weight: bold; }
+    .workspace {
+        display: grid;
+        grid-template-columns: 350px 1fr 340px;
+        height: 100%; overflow: hidden;
+    }
+    .axiom-tree { background: #020202; border-right: 1px solid var(--border); padding: 30px; overflow-y: auto; height: 100%; scrollbar-gutter: stable; }
+    .tree-header {font-size: 10px; color: var(--meta); letter-spacing: 3px; margin-bottom: 25px; border-bottom: 1px solid #111; padding-bottom: 10px; }
+    .cat-group { margin-bottom: 30px; }
+    .cat-label { font-size: 9px; color: var(--meta); margin-bottom: 12px; display: flex; justify-content: space-between; text-transform: uppercase; }
+    .dom-unit { margin-bottom: 15px; }
+    .dom-head { color: var(--primary); font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .sub-dom { margin-left: 18px; padding-left: 15px; border-left: 1px dotted #333; margin-top: 5px; }
+    .sub-label { color: #888; font-size: 11px; margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .axiom-leaf { padding-left: 15px; font-size: 11px; color: #444; border-left: 1px solid #1a1a1a; margin: 4px 0; font-family: 'Times New Roman', serif; transition: 0.2s; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .axiom-leaf:hover { color: var(--primary); background: rgba(0,255,136,0.05); }
+    .model-view { display: flex; flex-direction: column; padding: 20px; background: #000; gap: 15px; height: 100%; overflow: hidden; }
+    .instrument { flex: 1; border: 1px solid var(--primary); background: #020202; display: flex; flex-direction: column; position: relative; box-shadow: inset 0 0 60px rgba(0,255,136,0.05); overflow: hidden; }
+    .tabs { display: flex; background: #000; border-bottom: 1px solid var(--border); }
+    .t-btn { background: none; border: none; color: #444; padding: 15px 30px; font-size: 10px; font-weight: bold; cursor: pointer; }
+    .t-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); background: rgba(0,255,136,0.05); }
+    #canvas-wrap { flex: 1; position: relative; overflow: hidden; background-image: radial-gradient(#111 1px, transparent 1px); background-size: 20px 20px; }
+    #formula-overlay { position: absolute; top: 40px; left: 40px; color: var(--primary); font-size: 2rem; z-index: 10; text-shadow: 0 0 10px #000; }
+    .io-nexus { height: 180px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex-shrink: 0; }
+    .term { background: #000; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+    .term-h { font-size: 9px; color: var(--meta); padding: 5px 15px; background: #080808; border-bottom: 1px solid #111; letter-spacing: 2px; }
+    .log {flex: 1; padding: 12px; font-size: 10px; color: #333; font-family: monospace; overflow-y: auto; scrollbar-gutter: stable; }
+    .audit-side { background: #030303; border-left: 1px solid var(--border); padding: 30px; display: flex; flex-direction: column; gap: 20px; height: 100%; overflow: hidden; }
+    .score-hero { font-size: 3.5rem; color: var(--primary); font-weight: 800; text-align: center; border: 1px solid var(--border); padding: 20px; background: #000; flex-shrink: 0; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-shrink: 0; }
+    .f-box { background: #080808; border: 1px solid #1a1a1a; padding: 8px; }
+    .f-label { font-size: 8px; color: #555; margin-bottom: 2px; }
+    .f-val { font-size: 11px; color: var(--primary); font-weight: bold; }
+    .radar-box { height: 220px; border: 1px solid var(--border); background: #000; padding: 10px; flex-shrink: 0; }
+    .audit-hist { flex: 1; overflow-y: auto; border-top: 1px solid #111; padding-top: 15px; scrollbar-gutter: stable; }
+    .hist-item { font-size: 10px; color: #333; margin-bottom: 8px; border-left: 2px solid var(--primary); padding-left: 8px; }
+    .action-btn { background: var(--primary); color: #000; border: none; padding: 18px; font-weight: bold; cursor: pointer; transition: 0.2s; flex-shrink: 0; margin-top: auto; }
+    .action-btn:hover { box-shadow: 0 0 20px var(--primary); }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div id="layer-master">
+        <header class="rigid-header">
+            <div class="h-top">
+                <div style="display: flex; align-items:center; gap:40px;">
+                    <img src="/static/aichip-logo.png" class="logo-giant">
+                    <span class="brand-title">Cold_XRAG <span style="color:var(--primary)">PRO</span></span>
+                </div>
+                <div style="text-align:right; font-size:11px; color:var(--meta); line-height:1.8;">
+                    IMS_CLUSTER: <b style="color:var(--primary)">STABLE</b><br>
+                    UPASL_GEN: <b style="color:var(--primary)">ACTIVE</b><br>
+                    UUID: 4ec055ab
+                </div>
+            </div>
+            <div class="h-bottom">
+                <div class="p-step done">L1_INGEST</div>
+                <div class="p-step active">L2_UPASL</div>
+                <div class="p-step">L3_IMS</div>
+                <div class="p-step">L4_CAUSAL</div>
+                <div class="p-step">L5_AUDIT</div>
+            </div>
+        </header>
+        <section class="workspace">
+            <aside class="axiom-tree" id="watchdog-axiom">
+                <div class="tree-header">375 AXIOM SUBSTRATE [IMMUTABLE]</div>
+                <div class="cat-group">
+                    <div class="cat-label">DOMAIN 01: MATHEMATICS</div>
+                    <div class="dom-unit">
+                        <div class="dom-head">Analysis & Calculus</div>
+                        <div class="sub-dom">
+                            <div class="axiom-leaf" onclick="app.audit('Leibniz')">Leibniz: $d(fg) = f dg + gdf$</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-group">
+                    <div class="cat-label">DOMAIN 02: PHYSICS</div>
+                    <div class="dom-unit">
+                        <div class="dom-head">Classical Mechanics</div>
+                        <div class="sub-dom">
+                            <div class="axiom-leaf" onclick="app.audit('Force')">Force Invariant: $F=dp/dt$</div>
+                            <div class="axiom-leaf" id="axiom-375-leaf" onclick="app.audit('Thermodynamics')" style="color:#FFD700; border-left-color:#FFD700;">Axiom 375: η ≤ 1 - (TL/TH)</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <main class="model-view">
+                <div class="instrument">
+                    <div class="tabs">
+                        <button class="t-btn" onclick="app.render('core')">CORE</button>
+                        <button class="t-btn active" onclick="app.render('gnn')">GNN</button>
+                        <button class="t-btn" onclick="app.render('world')">WORLD</button>
+                        <button class="t-btn" onclick="app.render('causal')">CAUSAL</button>
+                    </div>
+                    <div id="canvas-wrap">
+                        <canvas id="main-render"></canvas>
+                        <div id="formula-overlay">$$\eta_{ij} \cdot \dot{u}_i$$</div>
+                    </div>
+                </div>
+                <div class="io-nexus">
+                    <div class="term"><div class="term-h">IMS: DATA INGESTION MONITOR</div><div id="log-ims" class="log"></div></div>
+                    <div class="term"><div class="term-h">UPASL: POLICY TRACE ENGINE</div><div id="log-upasl" class="log"></div></div>
+                </div>
+            </main>
+            <aside class="audit-side">
+                <div class="score-hero" id="main-score">0.854</div>
+                <div class="feature-grid">
+                    <div class="f-box"><div class="f-label">IMS Integrity</div><div class="f-val">0.9992</div></div>
+                    <div class="f-box"><div class="f-label">IMS Drift</div><div class="f-val">0.002%</div></div>
+                    <div class="f-box"><div class="f-label">UPASL Shield</div><div class="f-val">ACTIVE</div></div>
+                    <div class="f-box"><div class="f-label">Audit UUID</div><div class="f-val">劉_PRO-99</div></div>
+                </div>
+                <div class="radar-box"><canvas id="radar-ui"></canvas></div>
+                <div class="audit-hist" id="audit-list">
+                    <div style="font-size:9px; color:var(--meta); margin-bottom:10px;">UPASL AUDIT HISTORY</div>
+                </div>
+                <button class="action-btn" onclick="app.generateReport()">GENERATE AUDIT REPORT</button>
+            </aside>
+        </section>
+    </div>
+    <script>
+        const app = {
+            init() {
+                this.render('gnn');
+                this.initRadar();
+                this.startStreams();
+                window.addEventListener('resize', () => this.render(this.currentView));
+            },
+            currentView: 'gnn',
+            audit(axiom) {
+                const score = (0.8 + Math.random() * 0.15).toFixed(3);
+                document.getElementById('main-score').innerText = score;
+                const hist = document.getElementById('audit-list');
+                hist.innerHTML = `<div class="hist-item">[${new Date().toLocaleTimeString()}] UPASL: Verified ${axiom} -> Score ${score}</div>` + hist.innerHTML;
+                const upaslLog = document.getElementById('log-upasl');
+                upaslLog.innerHTML += '<span style="color:var(--primary)">[SECURE_GEN]</span> :: ' + axiom + ' confirmed<br>';
+                upaslLog.scrollTop = upaslLog.scrollHeight;
+                this.render(this.currentView, true);
+            },
+            generateReport() {
+                const upaslLog = document.getElementById('log-upasl');
+                upaslLog.innerHTML += '<span style="color:#3498db">[REPORT]</span> Generated Snap for 劉_SRV-PRO-99.<br>';
+                upaslLog.scrollTop = upaslLog.scrollHeight;
+            },
+            render(view, pulse = false) {
+                this.currentView = view;
+                document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
+                const canvas = document.getElementById('main-render');
+                const ctx = canvas.getContext('2d');
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+                ctx.clearRect(0,0,canvas.width, canvas.height);
+                if (pulse) { ctx.fillStyle = 'rgba(0, 255, 136, 0.05)'; ctx.fillRect(0,0,canvas.width, canvas.height); }
+                if (view==='gnn') this.drawGNN(ctx, canvas);
+                else if (view === 'world') this.drawLorenz(ctx, canvas);
+                else if (view === 'causal') this.drawMatrix(ctx, canvas);
+                else if (view === 'core') this.drawGaussian(ctx, canvas);
+                const formulas = { 'gnn': '$$\\eta_{ij} \\cdot \\dot{u}_i$$', 'core': '$$\\mathcal{P}(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}}e^{-\\frac{1}{2}(\\frac{x-\\mu}{\\sigma})^2}$$', 'world': '$$\\dot{x} = \\sigma(y-x), \\dot{y} = x(\\rho-z)-y$$', 'causal': '$$C_{ij} = \\text{Granger}(X_i \\to X_j)$$' };
+                document.getElementById('formula-overlay').innerHTML = formulas[view];
+                if (window.MathJax) MathJax.typesetPromise();
+            },
+            drawGNN(ctx, c) {
+                const nodes = Array.from({length: 25}, (_, i) => ({ x: c.width/2 + Math.cos(i)*180, y: c.height/2 + Math.sin(i)*180 }));
+                ctx.strokeStyle = 'rgba(0, 255, 136, 0.1)';
+                nodes.forEach(n=>{
+                    nodes.forEach(m=> { ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke(); });
+                    ctx.fillStyle='#00ff88'; ctx.beginPath(); ctx.arc(n.x, n.y, 4, 0, Math.PI*2); ctx.fill();
+                });
+            },
+            drawLorenz(ctx, c) {
+                let x=0.1, y=0, z=0, dt=0.01, s=10, r=28, b=8/3;
+                ctx.strokeStyle = 'rgba(0, 255, 136, 0.4)'; ctx.beginPath();
+                for(let i=0; i<5000; i++) {
+                    let dx=s*(y-x)*dt, dy=(x*(r-z)-y)*dt, dz=(x*y-b*z)*dt;
+                    x+=dx; y+=dy; z+=dz; ctx.lineTo(c.width/2+x*15, c.height/2+y*15);
+                }
+                ctx.stroke();
+            },
+            drawMatrix(ctx, c) {
+                const startX=c.width/2-200, startY = c.height/2-200;
+                for(let i=0; i<10; i++) {
+                    for(let j=0; j<10; j++){
+                        ctx.fillStyle = Math.random()>0.8? '#00ff88': 'rgba(0,255,136,0.1)';
+                        ctx.fillRect(startX+i*40, startY+j*40, 38, 38);
+                    }
+                }
+            },
+            drawGaussian(ctx, c) {
+                ctx.strokeStyle='#00ff88'; ctx.lineWidth=2; ctx.beginPath();
+                for(let x=0; x<c.width; x++){
+                    let normX = (x-c.width/2)/100;
+                    let y = Math.exp(-0.5*normX*normX)*200;
+                    ctx.lineTo(x, c.height-y-100);
+                }
+                ctx.stroke();
+            },
+            initRadar() {
+                new Chart(document.getElementById('radar-ui'), {
+                    type: 'radar',
+                    data: { labels: ['S', 'M', 'W', 'P', 'R'], datasets: [{ data: [85, 92, 74, 88, 80], borderColor: '#00ff88', backgroundColor: 'rgba(0,255,136,0.1)' }] },
+                    options: { plugins: {legend: { display: false } }, scales: {r: { grid: { color: '#222' }, ticks: { display: false }}}}
+                });
+            },
+            startStreams() {
+                setInterval(()=>{
+                    const hex = Math.floor(Math.random()*0xFFFFFF).toString(16).toUpperCase();
+                    const log = document.getElementById('log-ims');
+                    if(log) log.innerHTML += '<span style="color:#222">></span> RECV_DATA_PACKET_0x' + hex + '...<br>';
+                }, 2000);
+            }
+        };
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>

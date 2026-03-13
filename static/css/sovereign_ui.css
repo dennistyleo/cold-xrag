@@ -1,0 +1,31 @@
+/* FORCE CALIBRI & DENSITY */
+#watchdog-axiom, #watchdog-axiom * {
+    font-family: 'Calibri', 'Candara', 'Segoe UI', sans-serif !important;
+}
+
+.cat-label {
+    font-size: 1.15rem !important;
+    font-weight: bold !important;
+    color: #777 !important;
+    padding: 10px 0 5px 0 !important;
+    text-transform: uppercase;
+}
+
+.dom-head {
+    font-size: 0.95rem !important;
+    color: #00ff88 !important;
+    font-weight: bold !important;
+    padding: 2px 0 !important;
+}
+
+.axiom-leaf {
+    font-size: 0.72rem !important; /* Smaller text for density */
+    line-height: 1.1 !important;   /* Tightest height for maximum view */
+    padding: 1px 0 1px 10px !important;
+    color: #555;
+    cursor: pointer;
+}
+
+.axiom-active {
+    color: #eee !important; /* Bright white for real axioms */
+}
