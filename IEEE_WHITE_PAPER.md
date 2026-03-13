@@ -34,6 +34,9 @@ To prevent pathological inputs, the framework adheres to strict capacity budgets
 - **Nesting Depth**: Limited to 32 levels.
 - **Expression Safety**: A programmable forcing blocklist rejects tokens like `exec`, `eval`, and `import` to eliminate runtime mutation risks.
 
+### **VI. Silicon Strategy: FPGA-to-ASIC Migration** 
+Unlike hardware accelerators like Taalas HC1/2, COLD_XRAG integrates its World Models directly into silicon using low-cost MCU IP. By embedding XR Governance Agents into the ASIC fabric, we achieve mW-level power consumption while maintaining hardware-level axiom enforcement. This strategy ensures a high-performance, low-cost path for deploying non-hallucinatory AI in mission-critical vertical IoT.
+
 ### **V. Performance Roadmap: FPGA Acceleration**
 While the V36 Baseline is CPU-feasible for fleet monitoring, we are implementing a hardware matching engine targeting an **FPGA-based 46,000x speedup**. This acceleration supports high-frequency telemetry in mission-critical vertical IoT sectors, such as industrial power-management ASICs.
 
