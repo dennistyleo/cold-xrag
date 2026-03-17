@@ -1,16 +1,18 @@
 # COLD_XRAG | Sovereign Audit Intelligence (Baseline V36)
 
-### **Executive Summary**
+### **Elevator Pitch**
 COLD_XRAG is an industrial-grade **Audit Substrate** that converts complex evidence into "Probative Truth." 
 
-### **The Trust Pipeline (L1–L5)**
-- **L1 Ingest:** Real-time data normalization (Target Port: 5003).
-- **L2 UPASL:** AI-driven manifold analysis.
-- **L3 World:** 4K Digital Twin material stress simulation.
-- **L4 Causal:** Non-linear risk correlation mapping.
-- **L5 Audit:** Automated certification with unique Audit Hashes.
+### **Deployment Status: ✅ FULLY OPERATIONAL**
+The following architectural layers have been successfully implemented and verified:
+- **Backend API:** Active on Port 5003 (`/api/analyze`, `/api/domains`).
+- **Database:** SQLite/PostgreSQL substrate containing the **378 Axiom Library**.
+- **Visual Engines:** 4K Material World Lattice & Non-Linear Causal DAG.
 
-> **Note on Substrate Capacity:** The active axiom count (currently 372/378) is dynamic. The system automatically prunes redundant or mathematically unstable invariants to ensure 100% audit determinism.
+### **Substrate Capacity**
+- **Library:** 378 Industrial Axioms.
+- **Active Manifold:** 372 Admissible Claims.
+> *Note: Axiom counts are dynamic based on system invariant stability ($C_{\phi}$).*
 
 ### **Operational Access**
-Run the local driver on **Port 5003** to engage the full high-fidelity simulation.
+Run the local environment on **127.0.0.1:5003** to engage the full high-fidelity simulation.
